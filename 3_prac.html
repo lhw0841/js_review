@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 3항 연산자
+        let test;
+        test = test ? test:"초기화합니다";
+        console.log(test);
+
+        // || 연산자
+        // js 문장에서는 초기화연산자, 괄호 안에서는 or 
+        let test1;
+        test1 = test1 || "초기화1";
+        console.log(test1); //초기화1
+        test1 = test1 || "초기화2";
+        console.log(test1); //초기화1
+
+        // 배열 : array 객체(클래스가 아닌 객체)
+        let info=[1230,1,"홍길동",true,180.2];
+        console.log(info[0]);
+
+        let info2 = new Array();
+        info2[1]=2;
+        info2[2]=3;
+        console.log(info2[0]);
+        console.log(info2[1]);
+        console.log(info2[2]);
+        console.log(info2[3]);
+
+        // array 객체의 메소드들 (대부분 파괴적)
+        // concat() : 입력한 배열의 요소를 모두 합쳐 새로운 배열 생성, 비파괴적
+        let array1=[10,20,30,40];
+        let array2=["hello","hi"];
+        let array3=array1.concat(array2);
+        console.log(array1);
+        console.log(array3);
+        // join():배열안의 모든 요소를 문자열로 return, 비파괴적
+        let array4=[10,20,30,40];
+        let array5=["hello","hi"];
+        let array6 = array1.join(",");
+        console.log(array6);
+        console.log(typeof(array6)); // string
+        // pop():맨 끝 원소를 빼냄,push():맨 뒤자리에 추가 , 파괴적
+        let array7=[10,20,30,40];
+        console.log(array7.pop());
+        console.log(array7);
+        array7.push(50);
+        console.log(array7);
+        // reverse() : 원소를 뒤집어 반대방향으로, 파괴적
+        let array8=[10,20,30,40];
+        array8.reverse();
+        console.log(array8);
+        // sort() : 유니코드 코드 포인트에 따른 정렬, 파괴적
+        let array9=[100,21,13,40,200];
+        let array10=[11,41,24,33];
+        array9.sort();
+        array10.sort();
+        console.log(array9);
+        console.log(array10);
+        // sort([compareFunction])
+        // comparefunction 을 생략시 유니코드 코드포인트에 따른 정렬
+        // 문자열 대신 숫자를 비교하기위해 다음과같은 함수를 매개변수에 정의
+        array9.sort(function compare(a,b){ // 오름차순 정렬을 위한 함수
+            if(!(isNaN(a)&&!isNaN(b))) return a-b;
+        })
+        console.log(array9);
+        // slice():begin부터 end전까지 복사복은 새로운 객체로 반환,비파괴적
+        let array11=[10,22,34,43,50];
+        let array12 = array11.slice(2,4);
+        console.log(array12);
+        // splice(start,deletecount,item1,item2...) , start=몇번째 자리에, deletecount=몇개 지울지,item=무엇을 넣을지
+        // 배열의 기존요소를 삭제하거나 새 요소를 추가
+        let array13=[10,22,34,50,30];
+        array13.splice(1,0,44);
+        console.log(array13);
+        array13.splice(3,2,33,53);
+        console.log(array13);
+        array13.splice(4,2,33);
+        console.log(array13);
+
+        // array 객체-콜백 함수와 함께 사용하는 메소드
+        // forEach() : 배열의 요소를 하나씩 뽑아 반복
+        let arr=[52,273,32,64,72];
+        arr.forEach((item,index)=>{
+            console.log(index+"번째 요소는 "+item+"입니다");
+        });
+        let arr1=[10,22,34,50,30];
+        let arr2=[1,1,0,0,1];
+        let arr3=[]
+        arr1.forEach((item,index)=>{
+            arr3.push(item*arr2[index]);
+        })
+        console.log(arr3);
+        // map() : 배열내 모든 요소에 각각 함수를 호출한 결과를 새 배열로 반환
+        let ar1=[10,22,34,50,30];
+        let ar2=[1,1,0,0,1];
+        let ar3=ar1.map((item,index)=>{
+            return item+100;
+        })
+        console.log(ar3);
+        let ar4 = ar1.map((item,index)=>{
+            return item*ar2[index];
+        })
+        console.log(ar4);
+        // filter
+        let a1=[10,22,32,50,30];
+        let a2=a1.filter((item,index)=>{
+            return item>30;
+        })
+        console.log(a2);
+        
+        // for in , for of  반복문
+        // for(let 인덱스 in 배열) , for(let 요소 of 배열)
+        let ar=["사과","배","바나나",34,67,true,false];
+        for(let i in ar){
+            console.log(ar[i])
+        }
+        for(let i of ar){
+            console.log(i);
+        }
+
+        //변수의 스코프 : 변수를 사용할 수 있는 범위 (블록)
+        let a = 1;
+        let b = 1;
+        {
+            let a = 2;
+            {
+                let a = 3;
+                console.log(a); //3 
+                console.log(b); //1
+            }
+            console.log(a); //2
+            console.log(b); //1
+        }
+        // var 로 선언한 키워드는 변수 블록에 제한되지 않음. 호이스팅
+
+    </script>
+</body>
+</html>
