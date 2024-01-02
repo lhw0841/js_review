@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 4장 함수
+        // 함수 생성법 -------------------
+
+        // 1. 익명함수 (이름을 붙이지 않고 함수생성) hoising:X
+        let func1 = function(){ // let fun1 변수에 저장
+            console.log("익명함수");
+        };
+
+        func1(); // 익명함수
+        console.log(func1) // let fun1 = function(){
+                          //     console.log("익명함수");
+                            // };
+        
+        // 2. 선언함수 (이름을 붙인 함수 선언) hoisting:O
+        function func2(){
+            console.log("선언함수");
+        }
+
+        func2(); // 선언함수
+        console.log(func2); // 위와 동일하게 함수구조 출력
+
+        // 3. 화살표 함수 ()=>{} , function 키워드 대체
+        let func3=()=>{
+            console.log("화살표함수");
+        }
+        
+        func3(); // 화살표함수
+        console.log(func3); // 함수 구조 출력
+
+        let func4=name=>{
+            console.log(name);
+        }
+        func4("mini"); // mini 출력
+
+        // 함수의 생성순서 -------------------
+        // 선언적 함수와 익명함수의 생성 순서
+        // 1.
+        let f1;
+        f1 = function(){console.log("1st func")}
+        f1 = function(){console.log("2nd func")}
+        f1() // 2nd func 출력
+
+        // 2.
+        f2(); // 2nd func 출력
+        f2 = function(){console.log("1st func")} // 익명함수 hoisting X
+        function f2(){ // 선언함수 hoisting O
+            console.log("2nd func")
+        }
+        f2(); // 1st func 출력
+        // 마지막 f2() 출력시, 실행전 hoisting -> f2("2nd func")내용도 같이 올라옴
+        // f2 에 2nd func 이 덮어씌워진 상태에서, "1st func" 내용이 덮어씌워짐
+        // 결과적으로 1st func 이 출력된다.
+
+        // 3.
+        f3 = function(){console.log("1st func")} //익명함수 hoisting:X
+        function f3(){ //선언함수 hoisting:O
+            console.log("2nd func")
+        }
+        f3() // 1st func 출력 , 위와 동일하게 2nd 먼저 올라가고 1st 가 덮어짐
+        f3 = 3 // f3 = 3 이 되면서, 더이상 함수가 아님(type free)
+        console.log(f3) // 3
+
+        // 4.
+        //let f4 = function(){console.log("1st func")} // let -> hosting:X , TDZ 에 f4 선언 (추가 선언을 막음)
+        function f4(){ // hoisting 시 오류, TDZ 에 이미 f4 가 올라가있음. 추가선언 오류
+            console.log("2nd func")
+        }
+        f4() //Uncaught SyntaxError: Identifier 'f4' has already been declared
+        // let 은 hoisting 되지 않기때문에, 추가선언 오류가 발생. 
+        // var 사용시 오류가 발생하지 않음.
+
+        // 5.
+        f5() // 2nd func
+        function f5(){ // 선언함수 hoisting:O
+            console.log("1st func")
+        }
+        f5() // 2nd func
+        function f5(){ // 선언함수 hoisting:O
+            console.log("2nd func")
+        }
+        f5() // 2nd func
+        // 전체 코드가 2nd func 으로 갱신됌. hoisting
+
+        // 함수 hoisting 과 실행 -------------------
+        function calc(x,y){
+            return x+y
+        }
+        console.log(calc(5,3)) //15
+        function calc(x,y){
+            return x*y
+        }
+        console.log(calc(5,3)) //15
+        // hoisting 단계 순서
+        // 1~3 번 행 : 전역객체 calc=덧셈함수
+        // 6~7 번 행 : 전역객체 calc=곱셈함수
+
+        // 실행 단계 순서
+        // 4번행 (곱셈기능 실행) : 1~3 번 행 : 전역객체 calc=곱셈함수
+        // 실행 컨텍스트 스택에 calc 호출객체 생성(실행후 소멸)
+        // 8번행 (곱셈기능 실행) : 6~7 번 행 : 전역객체 calc=곱셈함수
+        // 실행 컨텍스트 스택에 calc 호출객체 생성(실행후 소멸)
+
+        let calc1 = function(x,y){
+            return x+y
+        }
+        console.log(calc1(5,5))
+        // let calc = function(x,y){ // syntax error : already defined
+        //     return x*y
+        // }
+        console.log(calc1(5,5))
+        
+        // hoisting 순서
+        // 1~3 번 행 : calc -> TDZ 에 등록
+        
+        function A(){
+            B()
+            console.log("world")
+        }
+        function B(){
+            console.log("hello")
+        }
+        A() // hello world
+        // 실행 순서
+        // 전역 실행 컨텍스트(전역 객체) -> A() 132줄의 호출
+        // 전역 실행 컨텍스트(전역객체) -> A 함수 실행 컨텍스트(호출객체)로 제어권 이전 -> B() 호출
+        // A 함수 실행 컨텍스트 -> B 함수 실행 컨텍스트로 제어권 이전
+
+        // 익명함수와 화살표함수의 차이 -------------------
+        //(function(){console.log(this)})() // 이 경우 this는 전역 객체를 참조합니다. 웹 브라우저에서는 this는 window 객체를 참조하게 됩니다.
+        //(()=>{console.log(this)})() // 이 경우 this는 함수가 정의된 시점의 this를 참조합니다. 따라서 화살표 함수가 전역 범위에서 정의되었더라도 this는 undefined를 참조하게 됩니다.
+        
+        // this 바인딩의 차이 -------------------
+        // 익명함수 : 함수가 호출될때, 어떻게 호출되었는지에 따라 this 에 바인딩할 객체가 동적으로 정해짐
+        // 화살표 함수 : 함수가 선언될때, this 에 바인딩할 객체가 정적으로 정해짐
+
+        // 일반함수 : 함수 내부에 this 객체 추가
+        // 화살표 : 함수 내부에 this 가 없다. 항상 상위 스코프의 this 를 가리킨다.
+
+    </script>
+</body>
+</html>
