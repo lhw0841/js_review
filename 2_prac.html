@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var arr1= ['test1','test2','test3'];
+        var arr2= [10,20,30];
+        var arr3= ["name",10];
+        arr1[4] = 123
+        console.log(arr1);
+        console.log(arr2);
+        console.log(arr3);
+
+        var kim = {
+            firstname:"john",
+            lastname:"kim",
+            age:15,
+            address:"seoul"
+        }
+        console.log(kim.age)
+        console.log(kim)
+        kim.Nickname="freshman"
+        console.log(kim.Nickname)
+
+        let array = [52,13,32,43,12]
+        array.forEach((item,index)=>{
+            console.log(index + "요소" + item);
+        });
+
+        let array1 = [10,20,30,40,50]
+        let array2 = [1,2,0,0,1]
+
+        let array3 = []
+        array1.forEach((item,index)=>{
+            array3.push(array1[index] * array2[index]);
+        });
+        console.log(array3)
+
+        let array4 = array1.map((item,index)=>{
+            return item*array2[index];
+        });
+        console.log(array4);
+    </script>
+</body>
+</html>
