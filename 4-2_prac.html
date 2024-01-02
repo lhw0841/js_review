@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var 과 함수 호이스팅 -------------------
+        console.log(s) //function s(){
+                        //     console.log("function s2")
+                        // }
+        function s(){
+            console.log("function s1")
+        }
+        console.log(s) // 위와 동일 출력
+        function s(){
+            console.log("function s2")
+        }
+        console.log(s) // 위와 동일 출력
+        var s = 10
+        console.log(s) // 10
+        // console.log(s()) // syntax error
+
+        // 함수 매개변수 초기화 -------------------
+        // js 는 매개변수를 넣지않아도 함수 호출이 가능
+        function print(name,count){
+            console.log(name+"이"+count+"개 있습니다")
+        }
+        print("사과",5)
+        print() // undefined이undefined개 있습니다
+
+        // undefined 시 조건문 처리
+        function print1(name,count){ // print1(name="과일",count=1) 디폴트 매개변수 사용가능
+            if(!count){ // count = count||1; 초기화 연산자(입력없을시 1) 도 사용가능
+                count=1
+            }
+            if(!name){
+                name="과일"
+            }
+            console.log(name+"이"+count+"개 있습니다")
+        }
+        
+        // 콜백함수 : 매개변수로 전달하는 함수
+        let cout = 0
+        function callTenTimes(callback){
+            for(let i=0;i<10;i++){
+                // 매개변수로 전달된 함수를 호출
+                callback()
+            }
+        }
+        callTenTimes(function(){ // 매개변수 자리에 함수
+            cout++
+            console.log(cout+"함수 호출")
+        })
+
+        callTenTimes(()=>{console.log("hi")}) // 화살표 함수
+
+        // ***클로저 Closer*** -------------------
+        // 외부함수의 내부함수가 전역에서 참조되고, 내부함수가 외부함수내의 지역 변수를 이용할수 있게되는 현상 또는 그 내부 함수
+        // 내부함수를 통하여 외부함수의 실행 컨텍스트 정보를 접근 가능
+        // 캡슐화를 위해 사용
+
+        // 기존 함수 호출 과정에서
+        // 호출이 완료된 함수의 호출객체는  가비지 컬렉션 대상
+        // 위에 해당되지 않는 경우는 1.함수안에 내부함수 정의, 그 내부함수를 전역에서 접근가능
+        // 2. 내부함수가 리턴되는 경우 3. 내부함수가 전역변수에 할당되는 경우
+
+        function outer(x){ // x:자유변수
+            function inner(y){ //inner 함수 : 클로저 함수
+                return x+y
+            }
+            return inner
+        }
+
+        let a = outer(4)
+        console.log(a) // function inner(y){return x+y} 리턴중
+        let result = a(5)
+        console.log(result) // 9
+
+        // 77 번줄 outer 함수는 호출후 garbage collection 대상이지만, 내부함수 inner 가 리턴되어 
+        // 전역변수 a 에 inner 함수의 메모리 참조가 할당되었기 때문에, outer(4) 호출객체가 garbage collection 될 수 없음.
+        // outer 내부 지역변수 x 값도 그대로 유지됌
+
+        // 표준 내장함수 -------------------
+        let B = "1401동"
+        console.log(parseInt(B)) // 문자열중 숫자만 골라 정수로 변경
+        console.log(parseFloat(B))
+
+        let num0 = '0'
+        let num10 = '10'
+        let num100 = '100'
+        let num1000 = '1000'
+        // 진법 변환 (2진수)
+        console.log(parseInt(num0,2))
+        console.log(parseInt(num10,2))
+        console.log(parseInt(num100,2))
+        console.log(parseInt(num1000,2))
+
+        // 타이머 함수
+        setTimeout(()=>{
+            console.log("1초가 지났습니다")
+        },1000)
+        let id = setInterval(()=>{
+            console.log("1초마다 호출됩니다.")
+        },1000)
+        setTimeout(()=>{
+            clearInterval(id)
+        },3000)
+        
+
+
+    </script>
+</body>
+</html>
