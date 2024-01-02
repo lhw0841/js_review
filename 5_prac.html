@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 이벤트: 방문객이 취하는 모든 동작
+        // 이벤트 리스너 : 이벤트 발생시 JS 실행문 실행하는것
+        // 이벤트 용어
+        window.onload = function(){};
+        // on 이 붙으면 이벤트 속성(property), function 은 이벤트 발생시 실행시킬 함수
+        // 이벤트 모델 : 문서 객체에 이벤트를 연결하는 방법
+        // DOM LEVEL 에 따른 구분 : DOM LEVEL 0 : 인라인 이벤트 모델, 고전 이벤트 모델
+        function btnclick(){
+            alert('click');
+        }
+        // 이외에도 onblur,onfocus,onload,onclick,ondbclick,onmouseover,onmouseout,onchange,onsubmit
+        // 고전 이벤트 모델
+        window.onload = function(){
+            let btn = document.getElementById("btn1");
+            btn.onclick=function(){
+                alert("click");
+            }
+        };
+        // 이벤트 this
+        window.onload = function(){
+            let btn2 = document.getElementById("btn2");
+            btn2.onclick=function(){
+                this.innerHTML = this.innerHTML+"*";
+            }
+        };
+
+        // window.onload = function(){
+        //     let btn3 = document.getElementsByName("btn3");
+        //     for(let i of btn3){
+        //         i.onclick=function(){
+        //             this.innerHTML = this.innerHTML + "*";                }
+        //     }
+        // };
+
+        // 표준 이벤트 모델
+        window.onload = function(event){
+            alert(event); // [object event] 이벤트 객체
+        }
+
+        // 기본 이벤트(HTML 태그의 기본 이벤트:form,href) 제거
+        // 항목을 정확히 입력하지 않을시의 웹페이지 이동 방지 등
+        // 이벤트 리스너에서 false 를 리턴
+
+        window.onload = function(){
+            let test=document.getElementById('button');
+            test.onclick=function(){
+                return false;
+            }
+        };
+
+
+    </script>
+    <!-- 인라인 이벤트 모델 -->
+    <button onclick="btnclick()">버튼</button>
+    <button id="btn1">button</button>
+    <button id="btn2">btn2</button>
+    <button id="btn3">btn3</button>
+    <button id="button" href="http://donga.ac.kr">btn</button>
+</body>
+</html>
